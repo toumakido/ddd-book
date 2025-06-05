@@ -26,14 +26,14 @@ const (
 	OrderStatusPaid      OrderStatus = "paid"
 	OrderStatusShipped   OrderStatus = "shipped"
 	OrderStatusCompleted OrderStatus = "completed"
+	OrderStatusCancelled OrderStatus = "cancelled"
 )
 
 type OrderPayment struct {
 	Method string
-	// メソッドごとの情報
+	// その他情報
 }
 
-type OrderPaymentInformation []struct {
-	Method string
-	// メソッドごとの情報
+func (o *Order) AllowCancel() bool {
+	return o.Status == OrderStatusCart
 }
