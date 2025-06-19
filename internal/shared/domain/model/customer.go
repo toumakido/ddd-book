@@ -1,5 +1,7 @@
 package model
 
+import "github.com/google/uuid"
+
 type CustomerID string
 
 type Address struct {
@@ -8,4 +10,8 @@ type Address struct {
 	City       string
 	Street     string
 	Building   string
+}
+
+func NewID() string {
+	return uuid.New().String()
 }
