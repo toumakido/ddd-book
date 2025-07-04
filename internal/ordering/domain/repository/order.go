@@ -10,6 +10,7 @@ import (
 
 type OrderRepository interface {
 	sharedrepository.Transactionable
-	GetOrderByCustomerIDForUpdate(ctx context.Context, tx sharedrepository.Tx, customerID sharedmodel.CustomerID) (*model.Order, error)
+	GetByIDForUpdate(ctx context.Context, tx sharedrepository.Tx, id model.OrderID) (*model.Order, error)
+	GetByCustomerIDForUpdate(ctx context.Context, tx sharedrepository.Tx, customerID sharedmodel.CustomerID) (*model.Order, error)
 	Save(ctx context.Context, tx sharedrepository.Tx, order *model.Order) error
 }
