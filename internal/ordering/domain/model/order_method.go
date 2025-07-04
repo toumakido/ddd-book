@@ -50,3 +50,37 @@ func (o *Order) recalculateTotalAmount() {
 	}
 	o.totalAmount = total
 }
+
+func (o *Order) Items() []OrderItem {
+	return o.items
+}
+
+func (o *Order) Confirm() error {
+	if o.status != OrderStatusCart {
+		return ErrOrderAlreadyConfirmed
+	}
+
+	o.status = OrderStatusConfirmed
+	o.updatedAt = time.Now()
+	return nil
+}
+
+func (o *Order) SetShipping(address sharedmodel.Address, fee int64, method string) {
+	o.shipping = OrderShipping{
+		Address: address,
+		Fee:     fee,
+		Method:  method,
+	}
+}
+
+func (o *Order) PaymentAmount() int64 {
+	return o.totalAmount + o.shipping.Fee
+}
+
+func (o *Order) SetPayment(method string) {
+	o.payment = OrderPayment{
+		Method: method,
+		Amount: o.PaymentAmount(),
+	}
+	o.updatedAt = time.Now()
+}
